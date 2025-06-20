@@ -7,7 +7,6 @@ import {Step1} from "./steps/step1.tsx";
 import {Step3} from "./steps/step3.tsx";
 export function MultiStepForm() {
     const { step, stepLength, setStep } = useFormStore()
-
     function handlePrevClick(){
         if(step===1){
             return
@@ -22,15 +21,13 @@ export function MultiStepForm() {
     }
     return (
         <div className={styles.multiStepFormContainer}>
-            <MultiStepFormHeader/>
+            <MultiStepFormHeader step={step} total={stepLength}/>
             <div className={styles.multiStepFormContent}>
                 {step === 1 && <Step1 />}
                 {step === 2 && <Step2 />}
                 {step === 3 && <Step3 />}
             </div>
-            <button onClick={handlePrevClick}>Prev</button>
-            <button onClick={handleNextClick}>Next</button>
-            <MultiStepFormFooter/>
+            <MultiStepFormFooter onBack={handlePrevClick} onNext={handleNextClick}/>
         </div>
     )
 }

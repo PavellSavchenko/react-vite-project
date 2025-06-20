@@ -6,6 +6,7 @@ type PersonalData = {
     surname: string
     email: string
     phone: string
+    isValid: boolean
 }
 
 type AddressData = {
@@ -14,10 +15,12 @@ type AddressData = {
     street: string
     house: string
     zip: string
+    isValid: boolean
 }
 
 type AgreementData = {
     accepted: boolean
+    isValid: boolean
 }
 
 type FormState = {
