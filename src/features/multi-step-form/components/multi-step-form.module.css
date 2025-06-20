@@ -1,0 +1,28 @@
+.multiStepFormContainer{
+    max-width: 1000px;
+    margin: 10px auto;
+    min-height: 90%;
+    border: 3px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.multiStepFormHeader{
+    height: 50px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid gray;
+}
+
+.multiStepFormContent{
+    flex: 1;
+}
+
+.multiStepFormFooter{
+    height: 50px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid gray;
+}
+

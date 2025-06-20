@@ -22,6 +22,14 @@ export const Route = createRootRoute({
                                 </Link>
                             </NavigationMenuLink>
                         </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                                <Link to="/multi-step-form-page" className="[&.active]:font-bold bg-blue-200 rounded-none"
+                                >
+                                    Multi Step Form
+                                </Link>
+                            </NavigationMenuLink>
+                        </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
             </div>
