@@ -8,7 +8,10 @@ type PersonalData = {
     phone: string
     isValid: boolean
 }
-
+export type StepControl = {
+    isValid: boolean
+    getValues: () => any
+}
 type AddressData = {
     country: string
     city: string

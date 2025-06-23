@@ -1,5 +1,5 @@
 import { z } from "zod"
-import {useFormStore} from "../../store/multi-step-form-store.ts";
+import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../components/ui/form.tsx";
@@ -17,25 +17,19 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 
-export function Step2() {
-    const { data, updateStepData} = useFormStore()
+export function Step2({ onReady }: { onReady: (control: StepControl) => void }) {
+    const { data } = useFormStore()
     const form = useForm<FormValues>({
         resolver: zodResolver(schema),
         mode: "onChange",
         defaultValues: data.address,
     })
     useEffect(() => {
-        const subscription = form.watch((values) => {
-            const parsed = schema.safeParse(values)
-
-            if (parsed.success) {
-                updateStepData('address', {...parsed.data, isValid: true})
-            } else {
-                updateStepData('address', {isValid: false})
-            }
+        onReady({
+            isValid: form.formState.isValid,
+            getValues: () => form.getValues(),
         })
-        return () => subscription.unsubscribe()
-    }, [form, form.watch, updateStepData])
+    }, [form, form.formState.isValid, onReady])
     return (
         <Form {...form}>
             <form className="space-y-4">
