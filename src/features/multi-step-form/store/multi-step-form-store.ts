@@ -1,17 +1,25 @@
 import {create} from 'zustand'
 import {persist} from 'zustand/middleware'
 
-type PersonalData = {
+export type PersonalData = {
     name: string
     surname: string
     email: string
     phone: string
     isValid: boolean
 }
-export type StepControl = {
+export type StepControl<T> = {
     isValid: boolean
-    getValues: () => any
+    getValues: () => T
 }
+export type StepKey = 'personal' | 'address' | 'agreement'
+
+export type StepDataMap = {
+    personal: PersonalData
+    address: AddressData
+    agreement: AgreementData
+}
+
 type AddressData = {
     country: string
     city: string
@@ -26,14 +34,16 @@ type AgreementData = {
     isValid: boolean
 }
 
+export type MultiStepFormData = {
+    personal: Partial<PersonalData>
+    address: Partial<AddressData>
+    agreement: Partial<AgreementData>
+}
+
 type FormState = {
     step: number,
     stepLength: number,
-    data: {
-        personal: Partial<PersonalData>
-        address: Partial<AddressData>
-        agreement: Partial<AgreementData>
-    }
+    data: MultiStepFormData,
     setStep: (step: number) => void
     updateStepData: <K extends keyof FormState['data']>(
         key: K,

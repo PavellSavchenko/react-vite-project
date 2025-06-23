@@ -1,17 +1,20 @@
 import {MultiStepFormHeader} from "./multi-step-form-header.tsx";
 import {MultiStepFormFooter} from "./multi-step-form-footer.tsx";
 import styles from "./multi-step-form.module.css"
-import {type StepControl, useFormStore} from "../store/multi-step-form-store.ts";
+import {type StepControl, type StepDataMap, type StepKey, useFormStore} from "../store/multi-step-form-store.ts";
 import {Step2} from "./steps/step2.tsx";
 import {Step1} from "./steps/step1.tsx";
 import {Step3} from "./steps/step3.tsx";
 import {useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
+import {submitForm} from "../api/submitForm.ts";
+import {Loader2Icon} from "lucide-react";
 
 export function MultiStepForm() {
     const {step, stepLength, setStep, updateStepData, reset, data} = useFormStore()
-    const [control, setControl] = useState<StepControl | null>(null)
+    const [control, setControl] = useState<StepControl<StepDataMap[StepKey]> | null>(null)
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     function handlePrevClick() {
         if (step > 1) setStep(step - 1)
@@ -28,15 +31,23 @@ export function MultiStepForm() {
         if (step < stepLength) setStep(step + 1)
     }
 
-    function handleSaveClick() {
-        console.log(data)
-        navigate({to: '/success-save'})
-        reset()
+    async function handleSaveClick() {
+        setLoading(true)
+        const response = await submitForm(data)
+        if (response.ok) {
+            await navigate({to: '/success-save'})
+            reset()
+        } else {
+            console.error(response)
+        }
+        setLoading(false)
     }
 
 
     return (
         <div className={styles.multiStepFormContainer}>
+            {loading && <Loader2Icon className="animate-spin"></Loader2Icon>}
+
             <MultiStepFormHeader step={step} total={stepLength}/>
             <div className={styles.multiStepFormContent}>
                 {step === 1 && <Step1 onReady={setControl}/>}
@@ -44,7 +55,7 @@ export function MultiStepForm() {
                 {step === 3 && <Step3 onReady={setControl}/>}
             </div>
             <MultiStepFormFooter onBack={handlePrevClick} onNext={handleNextClick} onSave={handleSaveClick}
-                                 disableNext={!control?.isValid} isLastStep={step === stepLength}
+                                 disableNext={!control?.isValid || loading} isLastStep={step === stepLength}
             />
         </div>
     )

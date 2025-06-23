@@ -7,17 +7,17 @@ import {Input} from "../../../../components/ui/input.tsx";
 import {useEffect} from "react";
 
 const schema = z.object({
-    country: z.string().min(3, "Enter Country name"),
-    city: z.string().min(3, "Enter City"),
-    street: z.string().min(3, "Enter Street name"),
-    house: z.string().min(1, "Enter house number"),
-    postalCode: z.string().min(6, "Enter Postal code"),
+    country: z.string().min(3, "Enter Country name").max(30, "Max length is 30 characters"),
+    city: z.string().min(3, "Enter City").max(30, "Max length is 30 characters"),
+    street: z.string().min(3, "Enter Street name").max(30, "Max length is 30 characters"),
+    house: z.string().min(1, "Enter house number").max(5, "Max length is 5 characters"),
+    postalCode: z.string().length(6, "Invalid postal code length"),
 })
 
 type FormValues = z.infer<typeof schema>
 
 
-export function Step2({onReady}: { onReady: (control: StepControl) => void }) {
+export function Step2({onReady}: { onReady: (control: StepControl<FormValues>) => void }) {
     const {data} = useFormStore()
     const form = useForm<FormValues>({
         resolver: zodResolver(schema),

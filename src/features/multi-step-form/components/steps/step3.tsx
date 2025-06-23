@@ -13,7 +13,7 @@ const schema = z.object({
 })
 type FormValues = z.infer<typeof schema>
 
-export function Step3({ onReady }: { onReady: (control: StepControl) => void }) {
+export function Step3({ onReady }: { onReady: (control: StepControl<FormValues>) => void }) {
     const { data } = useFormStore()
 
     const form = useForm<FormValues>({
