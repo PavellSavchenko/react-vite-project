@@ -6,22 +6,32 @@ import {Step2} from "./steps/step2.tsx";
 import {Step1} from "./steps/step1.tsx";
 import {Step3} from "./steps/step3.tsx";
 import {useState} from "react";
-export function MultiStepForm() {
-    const { step, stepLength, setStep, updateStepData } = useFormStore()
-    const [control, setControl] = useState<StepControl | null>(null)
+import {useNavigate} from "@tanstack/react-router";
 
-    function handlePrevClick(){
+export function MultiStepForm() {
+    const {step, stepLength, setStep, updateStepData, reset, data} = useFormStore()
+    const [control, setControl] = useState<StepControl | null>(null)
+    const navigate = useNavigate()
+
+    function handlePrevClick() {
         if (step > 1) setStep(step - 1)
     }
-    function handleNextClick(){
+
+    function handleNextClick() {
         if (!control || !control.isValid) return
 
         const values = control.getValues()
-        if (step === 1) updateStepData("personal", { ...values, isValid: true })
-        if (step === 2) updateStepData("address", { ...values, isValid: true })
-        if (step === 3) updateStepData("agreement", { ...values, isValid: true })
+        if (step === 1) updateStepData("personal", {...values, isValid: true})
+        if (step === 2) updateStepData("address", {...values, isValid: true})
+        if (step === 3) updateStepData("agreement", {...values, isValid: true})
 
         if (step < stepLength) setStep(step + 1)
+    }
+
+    function handleSaveClick() {
+        console.log(data)
+        navigate({to: '/success-save'})
+        reset()
     }
 
 
@@ -33,8 +43,8 @@ export function MultiStepForm() {
                 {step === 2 && <Step2 onReady={setControl}/>}
                 {step === 3 && <Step3 onReady={setControl}/>}
             </div>
-            <MultiStepFormFooter onBack={handlePrevClick} onNext={handleNextClick}
-                                 disableNext={!control?.isValid}
+            <MultiStepFormFooter onBack={handlePrevClick} onNext={handleNextClick} onSave={handleSaveClick}
+                                 disableNext={!control?.isValid} isLastStep={step === stepLength}
             />
         </div>
     )

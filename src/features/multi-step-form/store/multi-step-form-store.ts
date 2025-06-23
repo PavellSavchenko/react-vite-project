@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import {create} from 'zustand'
+import {persist} from 'zustand/middleware'
 
 type PersonalData = {
     name: string
@@ -52,7 +52,7 @@ export const useFormStore = create<FormState>()(
                 address: {},
                 agreement: {},
             },
-            setStep: (step) => set({ step }),
+            setStep: (step) => set({step}),
             updateStepData: (key, newData) =>
                 set((state) => ({
                     data: {
@@ -66,7 +66,7 @@ export const useFormStore = create<FormState>()(
             reset: () =>
                 set({
                     step: 1,
-                    data: { personal: {}, address: {}, agreement: {} },
+                    data: {personal: {}, address: {}, agreement: {}},
                 }),
         }),
         {

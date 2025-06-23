@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SuccessSaveRouteImport } from './routes/success-save'
 import { Route as MultiStepFormPageRouteImport } from './routes/multi-step-form-page'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SuccessSaveRoute = SuccessSaveRouteImport.update({
+  id: '/success-save',
+  path: '/success-save',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MultiStepFormPageRoute = MultiStepFormPageRouteImport.update({
   id: '/multi-step-form-page',
   path: '/multi-step-form-page',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
+  '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
+  '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
+  '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/multi-step-form-page'
+  fullPaths: '/' | '/about' | '/multi-step-form-page' | '/success-save'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/multi-step-form-page'
-  id: '__root__' | '/' | '/about' | '/multi-step-form-page'
+  to: '/' | '/about' | '/multi-step-form-page' | '/success-save'
+  id: '__root__' | '/' | '/about' | '/multi-step-form-page' | '/success-save'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   MultiStepFormPageRoute: typeof MultiStepFormPageRoute
+  SuccessSaveRoute: typeof SuccessSaveRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/success-save': {
+      id: '/success-save'
+      path: '/success-save'
+      fullPath: '/success-save'
+      preLoaderRoute: typeof SuccessSaveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/multi-step-form-page': {
       id: '/multi-step-form-page'
       path: '/multi-step-form-page'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   MultiStepFormPageRoute: MultiStepFormPageRoute,
+  SuccessSaveRoute: SuccessSaveRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

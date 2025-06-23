@@ -1,4 +1,4 @@
-import { z } from "zod"
+import {z} from "zod"
 import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -17,8 +17,8 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 
-export function Step2({ onReady }: { onReady: (control: StepControl) => void }) {
-    const { data } = useFormStore()
+export function Step2({onReady}: { onReady: (control: StepControl) => void }) {
+    const {data} = useFormStore()
     const form = useForm<FormValues>({
         resolver: zodResolver(schema),
         mode: "onChange",
@@ -36,7 +36,7 @@ export function Step2({ onReady }: { onReady: (control: StepControl) => void }) 
                 <FormField
                     control={form.control}
                     name="country"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Страна</FormLabel>
                             <FormControl>
@@ -50,7 +50,7 @@ export function Step2({ onReady }: { onReady: (control: StepControl) => void }) 
                 <FormField
                     control={form.control}
                     name="city"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>City</FormLabel>
                             <FormControl>
@@ -64,7 +64,7 @@ export function Step2({ onReady }: { onReady: (control: StepControl) => void }) 
                 <FormField
                     control={form.control}
                     name="street"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Street</FormLabel>
                             <FormControl>
@@ -78,7 +78,7 @@ export function Step2({ onReady }: { onReady: (control: StepControl) => void }) 
                 <FormField
                     control={form.control}
                     name="house"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>House number</FormLabel>
                             <FormControl>
@@ -92,7 +92,7 @@ export function Step2({ onReady }: { onReady: (control: StepControl) => void }) 
                 <FormField
                     control={form.control}
                     name="postalCode"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Postal code</FormLabel>
                             <FormControl>

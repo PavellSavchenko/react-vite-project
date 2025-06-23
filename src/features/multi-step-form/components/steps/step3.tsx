@@ -7,7 +7,9 @@ import {Checkbox} from "../../../../components/ui/checkbox.tsx"
 import {useEffect} from "react";
 
 const schema = z.object({
-    accepted: z.boolean(),
+    accepted: z.boolean().refine(val => val, {
+        message: 'You need to agree with the terms to continue.',
+    }),
 })
 type FormValues = z.infer<typeof schema>
 
@@ -25,6 +27,7 @@ export function Step3({ onReady }: { onReady: (control: StepControl) => void }) 
             getValues: () => form.getValues(),
         })
     }, [form, form.formState.isValid, onReady])
+
     return (
         <Form {...form}>
             <form className="space-y-4">
@@ -41,28 +44,28 @@ export function Step3({ onReady }: { onReady: (control: StepControl) => void }) 
                                         onCheckedChange={field.onChange}
                                     />
                                     <label htmlFor="accepted" className="text-sm leading-none">
-                                        Я принимаю{" "}
+                                        I accept{" "}
                                         <a
                                             href="/terms"
                                             className="underline text-primary"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            правила и условия
+                                            rules
                                         </a>{" "}
-                                        и{" "}
+                                        and{" "}
                                         <a
                                             href="/privacy"
                                             className="underline text-primary"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            политику конфиденциальности
+                                            private policy
                                         </a>
                                     </label>
                                 </div>
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className="text-red-600 "/>
                         </FormItem>
                     )}
                 />

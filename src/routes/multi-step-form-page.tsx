@@ -3,12 +3,12 @@ import {MultiStepForm} from "../features/multi-step-form/components/multi-step-f
 
 
 export const Route = createFileRoute('/multi-step-form-page')({
-  component: MultiStepFormPage,
+    component: MultiStepFormPage,
 })
 
 
 function MultiStepFormPage() {
 
 
-  return <MultiStepForm/>
+    return <MultiStepForm/>
 }

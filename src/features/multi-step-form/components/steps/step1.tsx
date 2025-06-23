@@ -1,10 +1,10 @@
-import { z } from "zod"
+import {z} from "zod"
 import {useForm} from "react-hook-form";
 import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
-import { zodResolver } from "@hookform/resolvers/zod"
+import {zodResolver} from "@hookform/resolvers/zod"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../components/ui/form.tsx";
 import {Input} from "../../../../components/ui/input.tsx";
-import { useEffect } from "react";
+import {useEffect} from "react";
 
 const schema = z.object({
     firstName: z.string().min(1, "Enter your first name"),
@@ -15,8 +15,8 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
-export function Step1 ({ onReady }: { onReady: (control: StepControl) => void }){
-    const { data } = useFormStore()
+export function Step1({onReady}: { onReady: (control: StepControl) => void }) {
+    const {data} = useFormStore()
     const form = useForm<FormValues>({
         resolver: zodResolver(schema),
         mode: "onChange",
@@ -29,20 +29,20 @@ export function Step1 ({ onReady }: { onReady: (control: StepControl) => void })
             getValues: () => form.getValues(),
         })
     }, [form, form.formState.isValid, onReady])
-    
+
     return (
         <Form {...form}>
             <form className="space-y-4">
                 <FormField
                     control={form.control}
                     name="firstName"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>First Name</FormLabel>
                             <FormControl>
                                 <Input placeholder="Enter your first name" {...field} />
                             </FormControl>
-                            <FormMessage className="text-red-600 " />
+                            <FormMessage className="text-red-600 "/>
                         </FormItem>
                     )}
                 />
@@ -50,7 +50,7 @@ export function Step1 ({ onReady }: { onReady: (control: StepControl) => void })
                 <FormField
                     control={form.control}
                     name="lastName"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Last Name</FormLabel>
                             <FormControl>
@@ -64,7 +64,7 @@ export function Step1 ({ onReady }: { onReady: (control: StepControl) => void })
                 <FormField
                     control={form.control}
                     name="email"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
@@ -78,7 +78,7 @@ export function Step1 ({ onReady }: { onReady: (control: StepControl) => void })
                 <FormField
                     control={form.control}
                     name="phone"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Phone number</FormLabel>
                             <FormControl>
