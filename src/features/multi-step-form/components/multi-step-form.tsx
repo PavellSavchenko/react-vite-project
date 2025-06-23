@@ -9,6 +9,7 @@ import {useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
 import {Loader2Icon} from "lucide-react";
 import {submitForm} from "../api/submitForm.ts";
+import type {FormStep1Values, FormStep2Values, FormStep3Values} from "../types/types.ts";
 
 export function MultiStepForm() {
     const {step, stepLength, setStep, updateStepData, reset, data} = useFormStore()
@@ -39,7 +40,7 @@ export function MultiStepForm() {
             console.log('Success:', res)
             reset()
             await navigate({to: '/success-save'})
-        } catch(err){
+        } catch (err) {
             console.error(err)
         }
         setLoading(false)
@@ -52,9 +53,9 @@ export function MultiStepForm() {
 
             <MultiStepFormHeader step={step} total={stepLength}/>
             <div className={styles.multiStepFormContent}>
-                {step === 1 && <Step1 onReady={setControl}/>}
-                {step === 2 && <Step2 onReady={setControl}/>}
-                {step === 3 && <Step3 onReady={setControl}/>}
+                {step === 1 && <Step1 onReady={setControl as (c: StepControl<FormStep1Values>) => void}/>}
+                {step === 2 && <Step2 onReady={setControl as (c: StepControl<FormStep2Values>) => void}/>}
+                {step === 3 && <Step3 onReady={setControl as (c: StepControl<FormStep3Values>) => void}/>}
             </div>
             <MultiStepFormFooter onBack={handlePrevClick} onNext={handleNextClick} onSave={handleSaveClick}
                                  disableNext={!control?.isValid || loading} isLastStep={step === stepLength}

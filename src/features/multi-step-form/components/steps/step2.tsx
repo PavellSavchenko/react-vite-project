@@ -1,26 +1,16 @@
-import {z} from "zod"
 import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../components/ui/form.tsx";
 import {Input} from "../../../../components/ui/input.tsx";
 import {useEffect} from "react";
-
-const schema = z.object({
-    country: z.string().min(3, "Enter Country name").max(30, "Max length is 30 characters"),
-    city: z.string().min(3, "Enter City").max(30, "Max length is 30 characters"),
-    street: z.string().min(3, "Enter Street name").max(30, "Max length is 30 characters"),
-    house: z.string().min(1, "Enter house number").max(5, "Max length is 5 characters"),
-    zip: z.string().regex(/^\d{5,6}$/, 'Invalid postal code'),
-})
-
-type FormValues = z.infer<typeof schema>
+import {type FormStep2Values, step2Schema} from "../../types/types.ts";
 
 
-export function Step2({onReady}: { onReady: (control: StepControl<FormValues>) => void }) {
+export function Step2({onReady}: { onReady: (control: StepControl<FormStep2Values>) => void }) {
     const {data} = useFormStore()
-    const form = useForm<FormValues>({
-        resolver: zodResolver(schema),
+    const form = useForm<FormStep2Values>({
+        resolver: zodResolver(step2Schema),
         mode: "onChange",
         defaultValues: data.address,
     })

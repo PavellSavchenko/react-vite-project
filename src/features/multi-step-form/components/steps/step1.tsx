@@ -1,24 +1,15 @@
-import {z} from "zod"
 import {useForm} from "react-hook-form";
 import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../../../../components/ui/form.tsx";
 import {Input} from "../../../../components/ui/input.tsx";
 import {useEffect} from "react";
+import {type FormStep1Values, step1schema} from "../../types/types.ts";
 
-const schema = z.object({
-    name: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
-    surname: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
-    email: z.string().email("invalid email"),
-    phone: z.string().regex(/^\d+$/, 'Should contain only numbers').length(11, "Invalid phone number length").max(11, ""),
-})
-
-type FormValues = z.infer<typeof schema>
-
-export function Step1({onReady}: { onReady: (control: StepControl<FormValues>) => void }) {
+export function Step1({onReady}: { onReady: (control: StepControl<FormStep1Values>) => void }) {
     const {data} = useFormStore()
-    const form = useForm<FormValues>({
-        resolver: zodResolver(schema),
+    const form = useForm<FormStep1Values>({
+        resolver: zodResolver(step1schema),
         mode: "onChange",
         defaultValues: data.personal,
     })

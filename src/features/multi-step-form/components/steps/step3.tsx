@@ -1,23 +1,17 @@
-import { z } from "zod"
-import { useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
 import {Form, FormControl, FormField, FormItem, FormMessage} from "../../../../components/ui/form.tsx";
 import {Checkbox} from "../../../../components/ui/checkbox.tsx"
 import {useEffect} from "react";
+import {type FormStep3Values, step3Schema} from "../../types/types.ts";
 
-const schema = z.object({
-    accepted: z.boolean().refine(val => val, {
-        message: 'You need to agree with the terms to continue.',
-    }),
-})
-type FormValues = z.infer<typeof schema>
 
-export function Step3({ onReady }: { onReady: (control: StepControl<FormValues>) => void }) {
-    const { data } = useFormStore()
+export function Step3({onReady}: { onReady: (control: StepControl<FormStep3Values>) => void }) {
+    const {data} = useFormStore()
 
-    const form = useForm<FormValues>({
-        resolver: zodResolver(schema),
+    const form = useForm<FormStep3Values>({
+        resolver: zodResolver(step3Schema),
         mode: "onChange",
         defaultValues: data.agreement,
     })
@@ -34,7 +28,7 @@ export function Step3({ onReady }: { onReady: (control: StepControl<FormValues>)
                 <FormField
                     control={form.control}
                     name="accepted"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem className="flex flex-col gap-2">
                             <FormControl>
                                 <div className="flex items-center space-x-2">
