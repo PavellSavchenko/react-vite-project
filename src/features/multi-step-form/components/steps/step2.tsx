@@ -11,7 +11,7 @@ const schema = z.object({
     city: z.string().min(3, "Enter City").max(30, "Max length is 30 characters"),
     street: z.string().min(3, "Enter Street name").max(30, "Max length is 30 characters"),
     house: z.string().min(1, "Enter house number").max(5, "Max length is 5 characters"),
-    postalCode: z.string().length(6, "Invalid postal code length"),
+    zip: z.string().regex(/^\d{5,6}$/, 'Invalid postal code'),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -38,7 +38,7 @@ export function Step2({onReady}: { onReady: (control: StepControl<FormValues>) =
                     name="country"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Страна</FormLabel>
+                            <FormLabel>Country</FormLabel>
                             <FormControl>
                                 <Input placeholder="Poland" {...field} />
                             </FormControl>
@@ -91,7 +91,7 @@ export function Step2({onReady}: { onReady: (control: StepControl<FormValues>) =
 
                 <FormField
                     control={form.control}
-                    name="postalCode"
+                    name="zip"
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>Postal code</FormLabel>

@@ -46,16 +46,7 @@ export function Step3({ onReady }: { onReady: (control: StepControl<FormValues>)
                                     <label htmlFor="accepted" className="text-sm leading-none">
                                         I accept{" "}
                                         <a
-                                            href="/terms"
-                                            className="underline text-primary"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            rules
-                                        </a>{" "}
-                                        and{" "}
-                                        <a
-                                            href="/privacy"
+                                            href="https://policies.google.com/privacy"
                                             className="underline text-primary"
                                             target="_blank"
                                             rel="noopener noreferrer"

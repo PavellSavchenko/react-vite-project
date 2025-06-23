@@ -7,10 +7,10 @@ import {Input} from "../../../../components/ui/input.tsx";
 import {useEffect} from "react";
 
 const schema = z.object({
-    firstName: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
-    lastName: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
+    name: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
+    surname: z.string().min(3, "Min length is 3 characters").max(30, "Max length is 30 characters"),
     email: z.string().email("invalid email"),
-    phone: z.string().length(11, "Invalid phone number length").max(11, ""),
+    phone: z.string().regex(/^\d+$/, 'Should contain only numbers').length(11, "Invalid phone number length").max(11, ""),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -35,7 +35,7 @@ export function Step1({onReady}: { onReady: (control: StepControl<FormValues>) =
             <form className="space-y-4">
                 <FormField
                     control={form.control}
-                    name="firstName"
+                    name="name"
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>First Name</FormLabel>
@@ -49,7 +49,7 @@ export function Step1({onReady}: { onReady: (control: StepControl<FormValues>) =
 
                 <FormField
                     control={form.control}
-                    name="lastName"
+                    name="surname"
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>Last Name</FormLabel>
@@ -82,7 +82,7 @@ export function Step1({onReady}: { onReady: (control: StepControl<FormValues>) =
                         <FormItem>
                             <FormLabel>Phone number</FormLabel>
                             <FormControl>
-                                <Input type="tel" placeholder="+48..." {...field} />
+                                <Input type="tel" placeholder="48..." {...field} />
                             </FormControl>
                             <FormMessage className="text-red-600 "/>
                         </FormItem>
