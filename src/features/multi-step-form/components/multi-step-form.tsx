@@ -6,10 +6,10 @@ import {Step2} from "./steps/step2.tsx";
 import {Step1} from "./steps/step1.tsx";
 import {Step3} from "./steps/step3.tsx";
 import {useState} from "react";
-import {useNavigate} from "@tanstack/react-router";
 import {Loader2Icon} from "lucide-react";
 import {submitForm} from "../api/submitForm.ts";
 import type {FormStep1Values, FormStep2Values, FormStep3Values} from "../types/types.ts";
+import {useNavigate} from "@tanstack/react-router";
 
 export function MultiStepForm() {
     const {step, stepLength, setStep, updateStepData, reset, data} = useFormStore()
@@ -39,7 +39,12 @@ export function MultiStepForm() {
             const res = await submitForm(data)
             console.log('Success:', res)
             reset()
-            await navigate({to: '/success-save'})
+            await navigate({
+                to: '/success-save',
+                state: {
+                    user: res
+                }
+        })
         } catch (err) {
             console.error(err)
         }

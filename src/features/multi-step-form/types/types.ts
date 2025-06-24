@@ -26,3 +26,21 @@ export const step1schema = z.object({
 })
 
 export type FormStep1Values = z.infer<typeof step1schema>
+
+export type User = {
+    id: number;
+    createdAt: string;
+
+    name: string;
+    surname: string;
+    email: string;
+    phone: string;
+
+    country: string;
+    city: string;
+    street: string;
+    house: string;
+    zip: string;
+
+    accepted: boolean;
+}
