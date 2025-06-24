@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessSaveRouteImport } from './routes/success-save'
 import { Route as MultiStepFormPageRouteImport } from './routes/multi-step-form-page'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SuccessSaveRoute = SuccessSaveRouteImport.update({
@@ -24,11 +23,6 @@ const MultiStepFormPageRoute = MultiStepFormPageRouteImport.update({
   path: '/multi-step-form-page',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,34 +31,30 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
   '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
   '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/multi-step-form-page': typeof MultiStepFormPageRoute
   '/success-save': typeof SuccessSaveRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/multi-step-form-page' | '/success-save'
+  fullPaths: '/' | '/multi-step-form-page' | '/success-save'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/multi-step-form-page' | '/success-save'
-  id: '__root__' | '/' | '/about' | '/multi-step-form-page' | '/success-save'
+  to: '/' | '/multi-step-form-page' | '/success-save'
+  id: '__root__' | '/' | '/multi-step-form-page' | '/success-save'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   MultiStepFormPageRoute: typeof MultiStepFormPageRoute
   SuccessSaveRoute: typeof SuccessSaveRoute
 }
@@ -85,13 +75,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MultiStepFormPageRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   MultiStepFormPageRoute: MultiStepFormPageRoute,
   SuccessSaveRoute: SuccessSaveRoute,
 }

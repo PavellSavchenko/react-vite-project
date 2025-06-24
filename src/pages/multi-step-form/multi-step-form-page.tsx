@@ -1,21 +1,29 @@
-import {MultiStepFormHeader} from "./multi-step-form-header.tsx";
-import {MultiStepFormFooter} from "./multi-step-form-footer.tsx";
-import styles from "./multi-step-form.module.css"
-import {type StepControl, type StepDataMap, type StepKey, useFormStore} from "../store/multi-step-form-store.ts";
-import {Step2} from "./steps/step2.tsx";
-import {Step1} from "./steps/step1.tsx";
-import {Step3} from "./steps/step3.tsx";
 import {useState} from "react";
-import {Loader2Icon} from "lucide-react";
-import {submitForm} from "../api/submitForm.ts";
-import type {FormStep1Values, FormStep2Values, FormStep3Values} from "../types/types.ts";
 import {useNavigate} from "@tanstack/react-router";
+import {Loader2Icon} from "lucide-react";
+import {MultiStepFormHeader} from "./multi-step-form-header/multi-step-form-header.tsx";
+import {Step1} from "./steps/step1.tsx";
+import {Step2} from "./steps/step2.tsx";
+import {Step3} from "./steps/step3.tsx";
+import {MultiStepFormFooter} from "./multi-step-form-footer/multi-step-form-footer.tsx";
+import styles from "./multi-step-form.module.css"
+import {useMultiStepFormStore} from "../../stores/multi-step-form-store/multi-step-form-store.ts";
+import type {
+    FormStep1Values,
+    FormStep2Values,
+    FormStep3Values,
+    StepControl,
+    StepDataMap,
+    StepKey
+} from "../../types/multi-step-form.types.ts";
+import {useCreateUser} from "./hooks/useCreateUser.ts";
 
 export function MultiStepForm() {
-    const {step, stepLength, setStep, updateStepData, reset, data} = useFormStore()
+    const {step, stepLength, setStep, updateStepData, reset, data} = useMultiStepFormStore()
     const [control, setControl] = useState<StepControl<StepDataMap[StepKey]> | null>(null)
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const { mutate } = useCreateUser()
 
     function handlePrevClick() {
         if (step > 1) setStep(step - 1)
@@ -35,19 +43,17 @@ export function MultiStepForm() {
     async function handleSaveClick() {
         setLoading(true)
         data.agreement.accepted = true
-        try {
-            const res = await submitForm(data)
-            console.log('Success:', res)
-            reset()
-            await navigate({
-                to: '/success-save',
-                state: {
-                    user: res
-                }
+        console.log(data)
+        mutate(data, {
+            onSuccess: async (res) => {
+                console.log("success")
+                console.log(res)
+                reset()
+                await navigate({
+                    to: '/success-save',
+                })
+            }
         })
-        } catch (err) {
-            console.error(err)
-        }
         setLoading(false)
     }
 

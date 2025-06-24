@@ -1,4 +1,4 @@
-import styles from "./multi-step-form.module.css";
+import styles from "../multi-step-form.module.css";
 import {Button} from "../../../components/ui/button.tsx";
 
 export function MultiStepFormFooter({onNext, onBack, onSave, disableNext, isLastStep}: {

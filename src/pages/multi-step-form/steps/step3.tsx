@@ -1,14 +1,14 @@
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {type StepControl, useFormStore} from "../../store/multi-step-form-store.ts";
-import {Form, FormControl, FormField, FormItem, FormMessage} from "../../../../components/ui/form.tsx";
-import {Checkbox} from "../../../../components/ui/checkbox.tsx"
 import {useEffect} from "react";
-import {type FormStep3Values, step3Schema} from "../../types/types.ts";
+import {Form, FormControl, FormField, FormItem, FormMessage} from "../../../components/ui/form.tsx";
+import {Checkbox} from "../../../components/ui/checkbox.tsx";
+import {useMultiStepFormStore} from "../../../stores/multi-step-form-store/multi-step-form-store.ts";
+import {type FormStep3Values, step3Schema, type StepControl} from "../../../types/multi-step-form.types.ts";
 
 
 export function Step3({onReady}: { onReady: (control: StepControl<FormStep3Values>) => void }) {
-    const {data} = useFormStore()
+    const {data} = useMultiStepFormStore()
 
     const form = useForm<FormStep3Values>({
         resolver: zodResolver(step3Schema),

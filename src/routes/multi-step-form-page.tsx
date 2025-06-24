@@ -1,5 +1,5 @@
 import {createFileRoute} from "@tanstack/react-router";
-import {MultiStepForm} from "../features/multi-step-form/components/multi-step-form.tsx";
+import {MultiStepForm} from "../pages/multi-step-form/multi-step-form-page.tsx";
 
 
 export const Route = createFileRoute('/multi-step-form-page')({
@@ -8,7 +8,5 @@ export const Route = createFileRoute('/multi-step-form-page')({
 
 
 function MultiStepFormPage() {
-
-
     return <MultiStepForm/>
 }

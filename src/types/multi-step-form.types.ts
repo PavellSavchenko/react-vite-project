@@ -1,5 +1,40 @@
 import {z} from "zod";
 
+export type PersonalData = {
+    name: string
+    surname: string
+    email: string
+    phone: string
+    isValid: boolean
+}
+
+export type StepControl<T> = {
+    isValid: boolean
+    getValues: () => T
+}
+
+export type StepKey = 'personal' | 'address' | 'agreement'
+
+export type StepDataMap = {
+    personal: PersonalData
+    address: AddressData
+    agreement: AgreementData
+}
+
+export type AddressData = {
+    country: string
+    city: string
+    street: string
+    house: string
+    zip: string
+    isValid: boolean
+}
+
+export type AgreementData = {
+    accepted: boolean
+    isValid: boolean
+}
+
 export const step3Schema = z.object({
     accepted: z.boolean().refine(val => val, {
         message: 'You need to agree with the terms to continue.',
@@ -27,20 +62,3 @@ export const step1schema = z.object({
 
 export type FormStep1Values = z.infer<typeof step1schema>
 
-export type User = {
-    id: number;
-    createdAt: string;
-
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-
-    country: string;
-    city: string;
-    street: string;
-    house: string;
-    zip: string;
-
-    accepted: boolean;
-}
